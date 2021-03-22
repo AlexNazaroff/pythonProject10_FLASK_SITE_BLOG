@@ -9,9 +9,12 @@ app = Flask(__name__)
 def index():
     return "E-mail"
 
+
+
+
 @app.route('/user/<string:name>/<int:id>')
-def index(name,id):
-    return "User Page" + name +'' + id
+def user(name,id):
+    return "User Page" + name + '' + id
 
 @app.route('/about')
 def about():
