@@ -2,12 +2,10 @@ from datetime import datetime
 from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 
-
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
-
 
 
 class Article(db.Model):
@@ -62,10 +60,28 @@ def post_delete(id):
         return 'При удалении статьи произошла ошибка'
 
 
+@app.route('/posts/<int:id>/update', methods=['POST', 'GET'])
+def post_update(id):
+    if request.method == 'POST':
+        title = request.form['title']
+        intro = request.form['intro']
+        text = request.form['text']
+        article = Article(title=title, intro=intro, text=text)
+
+        try:
+            db.session.add(article)
+            db.session.commit()
+            return redirect('/posts')
+        except:
+            return 'При добавлении статьи произошла ошибка '
+    else:
+        article = Article.query.get(id)
+
+        return render_template('post_update.html', article=article)
+
+
 @app.route('/create-article', methods=['POST', 'GET'])
 def create_article():
-
-
     if request.method == 'POST':
         title = request.form['title']
         intro = request.form['intro']
@@ -81,6 +97,7 @@ def create_article():
     else:
 
         return render_template('create-article.html')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
