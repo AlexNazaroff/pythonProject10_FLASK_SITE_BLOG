@@ -12,7 +12,7 @@ All posts on site
     <h2>{{el.title}}</h2>
     <p>{{el.intro}}</p>
     <p><b>Дата: {{el.date.date()}}</b></p>
-    <button class="btn btn-warning">Детальнее</button>
+    <a href="/posts/{{el.id}}" class="btn btn-warning">Детальнее</a>
 
     {% endfor %}
 
