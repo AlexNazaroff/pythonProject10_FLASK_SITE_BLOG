@@ -40,7 +40,7 @@ def about():
 
 @app.route('/posts')
 def posts():
-    articles = Article.query.order_by(Article.date).first()
+    articles = Article.query.order_by(Article.date.desc()).all()
     return render_template('posts.html', articles=articles)
 
 @app.route('/create-article', methods=['POST', 'GET'])
@@ -56,7 +56,7 @@ def create_article():
         try:
             db.session.add(article)
             db.session.commit()
-            return redirect('/')
+            return redirect('/posts')
         except:
             return 'При добавлении статьи произошла ошибка '
     else:

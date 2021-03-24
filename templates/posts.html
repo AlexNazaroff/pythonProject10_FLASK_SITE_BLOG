@@ -7,8 +7,14 @@ All posts on site
 {% block body %}
 <div class="container">
     <h1>All posts on site </h1>
-{{articles[0].title}}
+    {% for el in articles %}
+    <div class="alert alert-info"></div>
+    <h2>{{el.title}}</h2>
+    <p>{{el.intro}}</p>
+    <p><b>Дата: {{el.date.date()}}</b></p>
+    <button class="btn btn-warning">Детальнее</button>
 
+    {% endfor %}
 
 </div>
 {% endblock  %}
